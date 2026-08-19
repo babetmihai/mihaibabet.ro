@@ -1,33 +1,953 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>La multi Ani</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Mihai Babet — Senior Software Developer specializing in React, TypeScript, Node.js, and GraphQL."
+    />
+    <link rel="canonical" href="https://mihaibabet.ro/" />
+    <meta property="og:url" content="https://mihaibabet.ro/" />
+    <meta property="og:title" content="Mihai Babet — Software Developer" />
+    <meta
+      property="og:description"
+      content="Senior developer crafting scalable web applications with React, TypeScript, and GraphQL."
+    />
+    <title>Mihai Babet · mihaibabet.ro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      :root {
+        --bg: #020610;
+        --bg-elevated: #0a1220;
+        --surface: rgba(6, 14, 26, 0.82);
+        --border: rgba(0, 255, 65, 0.12);
+        --border-hover: rgba(0, 255, 65, 0.35);
+        --text: #d4f5dc;
+        --text-muted: #5a7a68;
+        --accent: #00ff41;
+        --accent-dim: #00cc33;
+        --accent-glow: rgba(0, 255, 65, 0.35);
+        --purple: #008f11;
+        --purple-glow: rgba(0, 143, 17, 0.35);
+        --font-display: "Syne", sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+        --max-width: 68rem;
+        --radius: 0.75rem;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+
       body {
-        background-color: #343542; /* Set the background color */
-        color: white; /* Set the text color to white */
-        font-family: Arial, sans-serif; /* Optional: sets a default font */
+        font-family: var(--font-mono);
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Background layers */
+      .bg-grid {
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 255, 65, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 255, 65, 0.025) 1px, transparent 1px);
+        background-size: 3rem 3rem;
+        mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .bg-glow {
+        position: fixed;
+        width: 40rem;
+        height: 40rem;
+        border-radius: 50%;
+        filter: blur(8rem);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .bg-glow--cyan {
+        top: -15rem;
+        right: -10rem;
+        background: radial-gradient(circle, rgba(0, 255, 65, 0.08), transparent 70%);
+      }
+
+      .bg-glow--purple {
+        bottom: -20rem;
+        left: -15rem;
+        background: radial-gradient(circle, rgba(0, 40, 80, 0.35), transparent 70%);
+      }
+
+      .scanline {
+        position: fixed;
+        inset: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.08) 2px,
+          rgba(0, 0, 0, 0.08) 4px
+        );
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.4;
+      }
+
+      /* Layout */
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      /* Nav */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        backdrop-filter: blur(1rem);
+        background: rgba(2, 6, 16, 0.85);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-inner {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0.75rem 1.5rem;
         display: flex;
-        justify-content: center; /* Center content horizontally */
-        align-items: center; /* Center content vertically */
-        height: 100vh; /* Full height of the viewport */
-        margin: 0; /* Remove default margin */
-        text-align: center; /* Center text alignment */
+        align-items: center;
+        justify-content: space-between;
       }
-      h1 {
-        font-size: 3em; /* Increase the size of the heading */
-        text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2); /* Add a 3D effect */
+
+      .logo {
+        font-family: var(--font-mono);
+        font-weight: 600;
+        font-size: 0.875rem;
+        letter-spacing: 0.02em;
+        color: var(--accent);
+        text-decoration: none;
       }
-      .emoji {
-        font-size: 3em; /* Set the size of the emoji to match the text */
+
+      .logo span {
+        color: var(--text-muted);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      /* Hero */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 4rem;
+      }
+
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1.5rem;
+      }
+
+      .hero-tag::before {
+        content: "";
+        width: 2rem;
+        height: 1px;
+        background: var(--accent);
+        box-shadow: 0 0 0.5rem var(--accent-glow);
+      }
+
+      .hero h1 {
+        font-family: var(--font-display);
+        font-size: clamp(2.5rem, 8vw, 5rem);
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        margin-bottom: 1rem;
+      }
+
+      .hero h1 .highlight {
+        background: linear-gradient(135deg, var(--accent), var(--purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+        color: var(--text-muted);
+        max-width: 36rem;
+        margin-bottom: 2rem;
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .meta-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        color: var(--text-muted);
+      }
+
+      .meta-chip svg {
+        width: 0.875rem;
+        height: 0.875rem;
+        fill: var(--accent);
+      }
+
+      .hero-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.25rem;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: var(--radius);
+        transition: all 0.25s;
+        cursor: pointer;
+        border: none;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #020610;
+        box-shadow: 0 0 1.5rem var(--accent-glow);
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-dim);
+        box-shadow: 0 0 2rem var(--accent-glow);
+        transform: translateY(-1px);
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .btn-ghost:hover {
+        border-color: var(--border-hover);
+        color: var(--accent);
+      }
+
+      /* Sections */
+      section {
+        padding: 5rem 0;
+      }
+
+      .section-label {
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.75rem;
+      }
+
+      .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        font-weight: 700;
+        margin-bottom: 2rem;
+      }
+
+      /* About */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .about-text {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+      }
+
+      .about-text p + p {
+        margin-top: 1rem;
+      }
+
+      .stat-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+      }
+
+      .stat-card {
+        padding: 1.25rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        backdrop-filter: blur(0.5rem);
+      }
+
+      .stat-card .number {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--accent);
+        line-height: 1;
+      }
+
+      .stat-card .label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 0.5rem;
+      }
+
+      /* Skills */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+        gap: 0.75rem;
+      }
+
+      .skill-group {
+        padding: 1.5rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        transition: border-color 0.25s, box-shadow 0.25s;
+      }
+
+      .skill-group:hover {
+        border-color: var(--border-hover);
+        box-shadow: 0 0 1.5rem rgba(0, 255, 65, 0.06);
+      }
+
+      .skill-group h3 {
+        font-family: var(--font-display);
+        font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .skill-tag {
+        padding: 0.375rem 0.625rem;
+        font-size: 0.75rem;
+        background: rgba(0, 255, 65, 0.06);
+        border: 1px solid rgba(0, 255, 65, 0.14);
+        border-radius: 0.375rem;
+        color: var(--text);
+      }
+
+      .skill-tag--purple {
+        background: rgba(0, 143, 17, 0.1);
+        border-color: rgba(0, 143, 17, 0.22);
+      }
+
+      /* Projects */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+        gap: 1rem;
+      }
+
+      .project-card {
+        position: relative;
+        padding: 1.5rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: border-color 0.25s, transform 0.25s;
+      }
+
+      .project-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent), var(--purple));
+        opacity: 0;
+        transition: opacity 0.25s;
+      }
+
+      .project-card:hover {
+        border-color: var(--border-hover);
+        transform: translateY(-2px);
+      }
+
+      .project-card:hover::before {
+        opacity: 1;
+      }
+
+      .project-index {
+        font-size: 0.75rem;
+        color: var(--accent);
+        letter-spacing: 0.1em;
+        margin-bottom: 0.75rem;
+      }
+
+      .project-card h3 {
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+      }
+
+      .project-card p {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        margin-bottom: 1.25rem;
+      }
+
+      .project-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.375rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .project-stack span {
+        font-size: 0.625rem;
+        padding: 0.25rem 0.5rem;
+        border: 1px solid var(--border);
+        border-radius: 0.25rem;
+        color: var(--text-muted);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .project-link {
+        font-size: 0.75rem;
+        color: var(--accent);
+        text-decoration: none;
+        letter-spacing: 0.06em;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      .project-link::after {
+        content: "→";
+        transition: transform 0.2s;
+      }
+
+      .placeholder-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 0.625rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.25rem 0.5rem;
+        border: 1px solid rgba(0, 143, 17, 0.35);
+        border-radius: 0.25rem;
+        color: var(--purple);
+        background: rgba(0, 143, 17, 0.1);
+      }
+
+      /* Contact */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: start;
+      }
+
+      .contact-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .contact-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.875rem;
+        transition: border-color 0.25s, color 0.25s;
+      }
+
+      .contact-link:hover {
+        border-color: var(--border-hover);
+        color: var(--accent);
+      }
+
+      .contact-link .icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        fill: var(--accent);
+        flex-shrink: 0;
+      }
+
+      .contact-link .label {
+        font-size: 0.625rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        display: block;
+      }
+
+      .languages {
+        padding: 1.5rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+
+      .languages h3 {
+        font-family: var(--font-display);
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--accent);
+      }
+
+      .lang-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        font-size: 0.75rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      }
+
+      .lang-item:last-child {
+        border-bottom: none;
+      }
+
+      .lang-level {
+        color: var(--text-muted);
+        font-size: 0.625rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      /* Footer */
+      footer {
+        padding: 2rem 0;
+        border-top: 1px solid var(--border);
+        text-align: center;
+      }
+
+      footer p {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        letter-spacing: 0.06em;
+      }
+
+      footer .pulse {
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        background: var(--accent);
+        border-radius: 50%;
+        margin-right: 0.5rem;
+        animation: pulse 2s infinite;
+        vertical-align: middle;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          box-shadow: 0 0 0.25rem var(--accent-glow);
+        }
+        50% {
+          opacity: 0.4;
+          box-shadow: none;
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .about-grid,
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stat-cards {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      /* Fade-in animation — visible by default, hidden only when JS is ready */
+      .fade-in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .js .fade-in {
+        opacity: 0;
+        transform: translateY(1rem);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .js .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
     </style>
   </head>
   <body>
-    <div>
-      <h1>La multi Ani</h1>
-      <span class="emoji">🎂 🍻 😎 🏍️ 🏎️</span>
-      <!-- Emoji -->
-    </div>
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow--cyan"></div>
+    <div class="bg-glow bg-glow--purple"></div>
+    <div class="scanline"></div>
+
+    <nav>
+      <div class="nav-inner">
+        <a href="https://mihaibabet.ro/" class="logo">mihaibabet<span>.ro</span></a>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-tag fade-in">Software Developer</div>
+          <h1 class="fade-in">
+            Mihai <span class="highlight">Babet</span>
+          </h1>
+          <p class="hero-subtitle fade-in">
+            Senior developer crafting scalable web applications with React,
+            TypeScript, and GraphQL — from architecture to production.
+          </p>
+          <div class="hero-meta fade-in">
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Romania · Remote
+            </span>
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              Available for work
+            </span>
+          </div>
+          <div class="hero-cta fade-in">
+            <a href="#projects" class="btn btn-primary">View Projects</a>
+            <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="container">
+          <p class="section-label fade-in">01 — About</p>
+          <h2 class="section-title fade-in">Building products that ship</h2>
+          <div class="about-grid">
+            <div class="about-text fade-in">
+              <p>
+                I'm a senior developer with over a decade of experience in React
+                and TypeScript. I work across the stack with Node.js and GraphQL,
+                and I've led small frontend teams through greenfield builds and
+                production releases.
+              </p>
+              <p>
+                I care about clean architecture, thoughtful API design, and
+                shipping software that holds up in production. Whether it's
+                defining frontend structure, mentoring developers, or building
+                data-rich interfaces — I focus on getting it right and getting
+                it out the door.
+              </p>
+            </div>
+            <div class="stat-cards fade-in">
+              <div class="stat-card">
+                <div class="number">10+</div>
+                <div class="label">Years with React</div>
+              </div>
+              <div class="stat-card">
+                <div class="number">TS</div>
+                <div class="label">Type-safe by default</div>
+              </div>
+              <div class="stat-card">
+                <div class="number">Full</div>
+                <div class="label">Stack capability</div>
+              </div>
+              <div class="stat-card">
+                <div class="number">Lead</div>
+                <div class="label">Team & architecture</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <div class="container">
+          <p class="section-label fade-in">02 — Skills</p>
+          <h2 class="section-title fade-in">Tech stack</h2>
+          <div class="skills-grid">
+            <div class="skill-group fade-in">
+              <h3>Frontend</h3>
+              <div class="skill-tags">
+                <span class="skill-tag">TypeScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Redux</span>
+                <span class="skill-tag">D3</span>
+              </div>
+            </div>
+            <div class="skill-group fade-in">
+              <h3>Backend</h3>
+              <div class="skill-tags">
+                <span class="skill-tag skill-tag--purple">Node.js</span>
+                <span class="skill-tag skill-tag--purple">GraphQL</span>
+              </div>
+            </div>
+            <div class="skill-group fade-in">
+              <h3>Practices</h3>
+              <div class="skill-tags">
+                <span class="skill-tag">Architecture</span>
+                <span class="skill-tag">API Design</span>
+                <span class="skill-tag">Team Leadership</span>
+                <span class="skill-tag">Mentoring</span>
+              </div>
+            </div>
+            <div class="skill-group fade-in">
+              <h3>Education</h3>
+              <div class="skill-tags">
+                <span class="skill-tag skill-tag--purple">Business Administration</span>
+                <span class="skill-tag skill-tag--purple">Math & CS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="container">
+          <p class="section-label fade-in">03 — Projects</p>
+          <h2 class="section-title fade-in">Selected work</h2>
+          <div class="projects-grid">
+            <article class="project-card fade-in">
+              <span class="placeholder-badge">Placeholder</span>
+              <div class="project-index">01</div>
+              <h3>Nexus Dashboard</h3>
+              <p>
+                Real-time analytics dashboard with interactive D3 visualizations,
+                Redux state management, and a GraphQL data layer for workforce
+                planning modules.
+              </p>
+              <div class="project-stack">
+                <span>React</span>
+                <span>TypeScript</span>
+                <span>Redux</span>
+                <span>D3</span>
+                <span>GraphQL</span>
+              </div>
+              <span class="project-link">View project</span>
+            </article>
+
+            <article class="project-card fade-in">
+              <span class="placeholder-badge">Placeholder</span>
+              <div class="project-index">02</div>
+              <h3>Vertex API Platform</h3>
+              <p>
+                Full-stack product built from scratch — frontend architecture,
+                GraphQL schema design, and Node.js services for visitor management
+                and scheduling workflows.
+              </p>
+              <div class="project-stack">
+                <span>React</span>
+                <span>TypeScript</span>
+                <span>Node.js</span>
+                <span>GraphQL</span>
+              </div>
+              <span class="project-link">View project</span>
+            </article>
+
+            <article class="project-card fade-in">
+              <span class="placeholder-badge">Placeholder</span>
+              <div class="project-index">03</div>
+              <h3>Pulse Bot</h3>
+              <p>
+                TypeScript automation tool with modular command architecture,
+                event-driven processing, and extensible plugin system for
+                workflow integrations.
+              </p>
+              <div class="project-stack">
+                <span>TypeScript</span>
+                <span>Node.js</span>
+              </div>
+              <span class="project-link">View project</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container">
+          <p class="section-label fade-in">04 — Contact</p>
+          <h2 class="section-title fade-in">Let's connect</h2>
+          <div class="contact-grid">
+            <div class="contact-links fade-in">
+              <a href="mailto:mihai.babet@gmail.com" class="contact-link">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <div>
+                  <span class="label">Email</span>
+                  mihai.babet@gmail.com
+                </div>
+              </a>
+              <a href="https://github.com/babetmihai" target="_blank" rel="noopener noreferrer" class="contact-link">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A8.02 8.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                <div>
+                  <span class="label">GitHub</span>
+                  @babetmihai
+                </div>
+              </a>
+              <a href="https://www.linkedin.com/in/mihai-babet/" target="_blank" rel="noopener noreferrer" class="contact-link">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 114.127 0 2.063 2.063 0 01-2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                <div>
+                  <span class="label">LinkedIn</span>
+                  mihai-babet
+                </div>
+              </a>
+            </div>
+            <div class="languages fade-in">
+              <h3>Languages</h3>
+              <div class="lang-item">
+                <span>English</span>
+                <span class="lang-level">Fluent</span>
+              </div>
+              <div class="lang-item">
+                <span>Romanian</span>
+                <span class="lang-level">Native</span>
+              </div>
+              <div class="lang-item">
+                <span>German</span>
+                <span class="lang-level">Elementary</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p><span class="pulse"></span>© 2026 Mihai Babet · mihaibabet.ro</p>
+      </div>
+    </footer>
+
+    <script>
+      document.documentElement.classList.add("js");
+
+      const fadeElements = document.querySelectorAll(".fade-in");
+
+      const reveal = (el) => el.classList.add("visible");
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                reveal(entry.target);
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.05 }
+        );
+
+        fadeElements.forEach((el) => {
+          observer.observe(el);
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            reveal(el);
+          }
+        });
+      } else {
+        fadeElements.forEach(reveal);
+      }
+    </script>
   </body>
 </html>
