@@ -56,6 +56,7 @@
         scroll-behavior: smooth;
         font-size: 16px;
         color-scheme: dark;
+        overflow-x: hidden;
       }
 
       body {
@@ -64,6 +65,7 @@
         color: var(--text);
         line-height: 1.65;
         overflow-x: hidden;
+        max-width: 100%;
       }
 
       p,
@@ -88,26 +90,30 @@
       }
 
       /* Background layers */
-      .bg-grid {
+      .bg-decor {
         position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .bg-grid {
+        position: absolute;
         inset: 0;
         background-image:
           linear-gradient(rgba(45, 212, 191, 0.03) 1px, transparent 1px),
           linear-gradient(90deg, rgba(45, 212, 191, 0.03) 1px, transparent 1px);
         background-size: 3rem 3rem;
         mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 70%);
-        pointer-events: none;
-        z-index: 0;
       }
 
       .bg-glow {
-        position: fixed;
+        position: absolute;
         width: 40rem;
         height: 40rem;
         border-radius: 50%;
         filter: blur(8rem);
-        pointer-events: none;
-        z-index: 0;
       }
 
       .bg-glow--cyan {
@@ -414,7 +420,7 @@
       /* Skills */
       .skills-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
         gap: 0.75rem;
       }
 
@@ -466,7 +472,7 @@
       /* Projects */
       .projects-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
         gap: 1rem;
       }
 
@@ -603,6 +609,8 @@
         color: var(--text);
         font-size: 0.875rem;
         line-height: 1.5;
+        min-width: 0;
+        overflow-wrap: anywhere;
         transition: border-color 0.25s, color 0.25s;
       }
 
@@ -616,6 +624,10 @@
         height: 1.25rem;
         fill: var(--accent);
         flex-shrink: 0;
+      }
+
+      .contact-link div {
+        min-width: 0;
       }
 
       .contact-link .label {
@@ -763,9 +775,11 @@
     </style>
   </head>
   <body>
-    <div class="bg-grid"></div>
-    <div class="bg-glow bg-glow--cyan"></div>
-    <div class="bg-glow bg-glow--purple"></div>
+    <div class="bg-decor">
+      <div class="bg-grid"></div>
+      <div class="bg-glow bg-glow--cyan"></div>
+      <div class="bg-glow bg-glow--purple"></div>
+    </div>
 
     <nav>
       <div class="nav-inner">
@@ -843,16 +857,12 @@
                 <div class="label">Years experience</div>
               </div>
               <div class="stat-card">
-                <div class="number number--sm">Teams</div>
-                <div class="label">Led and mentored</div>
+                <div class="number number--sm">0 → 1</div>
+                <div class="label">Greenfield to production</div>
               </div>
               <div class="stat-card">
                 <div class="number number--sm">Remote</div>
                 <div class="label">Contractor only</div>
-              </div>
-              <div class="stat-card">
-                <div class="number number--sm">EN / RO</div>
-                <div class="label">Working languages</div>
               </div>
             </div>
           </div>
